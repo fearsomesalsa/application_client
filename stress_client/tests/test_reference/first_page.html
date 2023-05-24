@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href=/static/css/bootstrap.min.css rel="stylesheet">
+    <script src=/static/js/bootstrap.bundle.min.js></script>
+<head>
+    <meta charset="UTF-8">
+     <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon"/>
+    <title>Progresstech GFEM Loads</title>
+    <nav class="navbar" aria-label="Light offcanvas navbar" style="background-color:#3a7fe5;">
+      <div class="container-fluid">
+      <a class="navbar-brand" href="/"><img src= /static/img/logo.png width=140px height=50px/></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarLight"
+              data-bs-target="#navbarLight"  aria-controls="offcanvasNavbarLight">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbarLight" aria-labelledby="offcanvasNavbarLightLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">Progresstech</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="d-flex flex-column flex-shrink-0 p-2 mb-auto">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Главная</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Работа с Базой Данных
+              </a>
+            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuLight">
+
+                <li><a class="dropdown-item" href="/gfem/post_data">Внести данные</a></li>
+
+                <li><a class="dropdown-item" href="/gfem/get_data">Получить данные</a></li>
+
+                <li><a class="dropdown-item" href="/gfem/update_data">Внести изменения</a></li>
+
+                <li><a class="dropdown-item" href="/gfem/delete_data">Удалить данные</a></li>
+
+            </ul>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Cервисы
+              </a>
+            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuLight">
+
+                <li><a class="dropdown-item" href="/stress-service/service_CS">Расчет поперечных сечений</a></li>
+
+                <li><a class="dropdown-item" href="/stress-service/id-generate">Создать карту id</a></li>
+
+            </ul>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Стандарты
+              </a>
+            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuLight">
+
+                <li><a class="dropdown-item" href="/#">Материалы</a></li>
+
+                <li><a class="dropdown-item" href="/#">Крепеж</a></li>
+
+                <li><a class="dropdown-item" href="/#">Параметры усталости</a></li>
+
+            </ul>
+            <li class="nav-item"><a class="nav-link active"  href="/aboutus">Помощь</a></li>
+            <li class="nav-item"><a class="nav-link active"  href="/contacts">Контакты</a></li>
+          </ul>
+                <hr>
+            </div></div>
+        </div>
+      </div>
+    </nav>
+</head>
+
+<div style="margin-bottom:125px">
+
+
+<body style='background: url(/static/img/airplane.png); background-size: 100%;'>
+<div class="justify-content-center m-3">
+<div class="row row-cols-1 row-cols-sm-2">
+   <div class="col-lg-2 cols-sm-1 mb-4">
+      <div class="list-group" id="list-tab" role="tablist">
+        <a class="list-group-item list-group-item-action active" id="list-description-list" data-bs-toggle="list" href="#list-description" role="tab" aria-controls="home">Описание</a>
+        <a class="list-group-item list-group-item-action" id="list-node-list" data-bs-toggle="list" href="#list-node" role="tab" aria-controls="node">Узловые точки</a>
+        <a class="list-group-item list-group-item-action" id="list-sections-list" data-bs-toggle="list" href="#list-sections" role="tab" aria-controls="sections">Задание сечений</a>
+        <a class="list-group-item list-group-item-action" id="list-skin-list" data-bs-toggle="list" href="#list-skin" role="tab" aria-controls="skin">Задание толщин общивки</a>
+      </div>
+   </div>
+   <div class="col-lg-10 cols-sm-1">
+      <div class="tab-content" id="list-nav-tabContent">
+        <div class="tab-pane fade show active" id="list-description" role="tabpanel" aria-labelledby="list-description-list">
+            <div class="card opacity-100 border-white"> <p class="m-1"> Данная программа служит для автоматизации занесения результатов образмеривания и создания КЭМ
+                на основе этих данных. И дальнейшей работы с полученными результатами расчета.</p></div>
+        </div>
+        <div class="tab-pane fade" id="list-node" role="tabpanel" aria-labelledby="list-node-list">
+
+
+<div class="card opacity-100 border-white mb-4"><p class="m-1">
+После создания основного каркаса (задания нумерации stringer frame), следует собрать и занести информацию
+             по узловым точкам. Помимо координат необходимо указать номер шпангоута, номер стрингер и сторону.</p></div>
+<div class="card opacity-100 border-white">
+    <div class="row row-cols-1 row-cols-sm-2 m-2">
+        <div class="">
+            <img src=/static/img/node_menu.png width=100%/>
+        </div>
+        <div class="">
+            <ol>
+        <li>Откройте меню "Внести данные"</li>
+        <li>Выберите таблицу "Node"</li>
+        <li>Задайте уникальные номер узла следую правилу <a href="#">Правило</a></li>
+        <li>Укажите какому шпангоуту, стрингеру он принадлежит и с какой стороны находится</li>
+        <li>Укажите номер используемой системы координат. Оставьте поле пустым для глобальной СК.</li>
+        <li>Укажите координаты в выбранной системе координат</li>
+        <li>Нажмите кнопку отправить, чтобы сохранить узел в БД</li>
+        <li>Для пакетной загрузки узлов в БД, рекомендуется делать это через эксель. Нажмите чекбокс,
+            скачайте шаблон для заполнения и следуйте инструкциям на листе Readme.</li>
+    </ol>
+        </div>
+    </div>
+</div>
+        </div>
+        <div class="tab-pane fade" id="list-sections" role="tabpanel" aria-labelledby="list-sections-list">
+            <div class="card opacity-100 border-white"><p class="m-1">
+            Затем можно приступить к заданию поперечного сечения элементов. Помимо размеров для каждого сечения необходимо
+    указать тип структуры Frame, Stringer, Rib и т.д, так же требуется указать расположение сечения (номер шпангоута,
+                сторона и номер стрингера)</p></div></div>
+        <div class="tab-pane fade" id="list-skin" role="tabpanel" aria-labelledby="list-skin-list">
+            <div class="card opacity-100 border-white"><p class="m-1"> Задание толщин обшивки происходит в меню.......</p></div>
+        </div>
+      </div>
+   </div>
+</div>
+</body>
+
+</div>
+
+</html>

@@ -1,0 +1,40 @@
+# Описание настран карт элементов, Для каждой карты следует соблюдать следующий порядок:
+# GRID - название карты в соответствии с БД (соответствует NASTRAN)
+# - "$\n$GRID, GRID ID, CID, Coor....."  - первая закоменченная строка которая будет вставлятся в bdf, для описания параметров..
+# - "GRID,{dct[uid]},,{dct[coord_x] ....." - строка для дальнейшего форматирования где на место dct[uid]
+#                                             будет вставлятся соответсвующий параметр.
+
+GRID:
+  - "$\n$GRID, GRID ID, CID, Coor X, Coor Y, Coor Z\n$\n"
+  - "GRID,{dct[uid]},,{dct[coord_x]},{dct[coord_y]},{dct[coord_z]}\n"
+CBEAM:
+  - "$\n$CBEAM, Element ID, Property ID, Start node , End node, Orient node\n$
+  , PA (pin flag), PB, Offset start X, Offset start Y, Offset start Z, Offset end X, Offset end Y, Offset end Z\n$\n"
+  - "CBEAM,{dct[uid]},{dct[property_id]},{dct[node_1]},{dct[node_2]:1.0f},{dct[node_3]:1.0f}\n
+    ,,,{dct[off_1_x]},{dct[off_1_y]},{dct[off_1_z]},{dct[off_2_x]},{dct[off_2_y]},{dct[off_2_z]}\n"
+CROD:
+  - "$\n$CROD, Element ID, Property ID, node 1, node 2\n$\n"
+  - "CROD,{dct[uid]},{dct[property_id]},{dct[node_1]},{dct[node_2]}\n"
+CQUAD4:
+  - "$\n$CQUAD4, Element ID, Property ID, node 1, node 2, node 3, node 4, THETA/MCID, offset\n$\n"
+  - "CQUAD4,{dct[uid]},{dct[property_id]},{dct[node_1]},{dct[node_2]},{dct[node_3]:1.0f},{dct[node_4]:1.0f},,{dct[off_1_x]}\n"
+CTRIA3:
+  - "$\n$CTRIA3, Element ID, Property ID, node 1, node 2, node 3, THETA/MCID, offset\n$\n"
+  - "CTRIA3, {dct[uid]},{dct[property_id]},{dct[node_1]},{dct[node_2]},{dct[node_3]:1.0f},,{dct[off_1_x]}\n"
+CHEAR:
+  - "$\n$Card description\n$\n"
+  - "CHEAR,{dct[uid]},{dct[property_id]},{dct[node_1]},{dct[node_2]},{dct[node_3]},{dct[node_4]},,{dct[off_1_x]}\n"
+PBEAM:
+  - "$\n$PBEAM, Property ID, material ID, Area (A), I1(A), I2(A), J(A), NSM(A)\n$
+  ,SO(stress output), X/X(B) (distance from A), Area(B), I1(B), I2(A), J(A), NSM(A)\n$\n"
+  - "PBEAM,{dct[uid]},{dct[material_id]},{dct[area_s]},{dct[inertia_zz_s]},{dct[inertia_yy_s]},{dct[inertia_yz_s]},{dct[inertia_torsion_s]},,\n
+  ,NO,1.0,{dct[area_e]},{dct[inertia_zz_e]},{dct[inertia_yy_e]},{dct[inertia_yz_e]},{dct[inertia_torsion_e]},\n"
+PROD:
+  - "$\n$PROD, property ID, material ID, Area, J, C, NSM\n$\n"
+  - "PROD,{dct[uid]},{dct[material_id]},{dct[area_s]}, {dct[inertia_torsion_s]}, ,\n"
+PSHELL:
+  - "$\n$PSHELL, property ID, material ID, element thickness\n$\n"
+  - "PSHELL,{dct[uid]},{dct[material_id]},{dct[shell_thick]}\n"
+MAT1:
+  - "$\n$MAT1, material ID, Eu,Es, nu, density\n$\n"
+  - "MAT1,{dct[uid]},{dct[eu]},,{dct[nu]},{dct[density]}\n"

@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+#  container_name: dev_client
+  web:
+    # Берем Dockerfile из каталога app
+    build: ./stress_client
+    # Запускаем тестовый сервер
+    command: python manage.py runserver 0.0.0.0:8000
+    # куда будут помещены данные из каталога app
+    volumes:
+      - ./stress_client/:/usr/src/stress_client/
+    # Открываем порт 8000 внутри и снаружи
+    ports:
+      - 8100:8000
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # Файл содержащий переменные для контейнера
+    env_file:
+      - ./.env.dev
+  db:
+    # Образ и версия базы, которую мы будем использовать
+    image: postgres:12.0-alpine
+    # Внешний том(volume) и место где он будет подключен внутри контейнера
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.prod.db
+
+volumes:
+  postgres_volume:

@@ -1,0 +1,65 @@
+{% load static %}
+
+{% if template %}
+<div class="m-3">
+    <a href="{% static '' %}files/{{template}}"><img src="{% static 'img/icons-excel.png' %}">Посмотреть шаблон для заполнения</a>
+</div>
+<hr>
+{% endif %}
+{% if form.upload %}
+<p>Выберите файл из которого зачитаются данные</p>
+{% endif %}
+<table>
+{{ form }}
+</table>
+
+{% if dynamic_fields %}
+ {% for field_name, field_lst in dynamic_fields.items %}
+    <div class="m-3">
+    <label class="fw-bold" for={{field_name}}> {{field_name}}: </label>
+    <select type="text" class="dynamic_param_list" id={{field_name}} name={{field_name}} list="method"
+            onChange="updateFields({{field_lst}}[this.options[this.selectedIndex].value])" required>
+    <datalist id="fields-item-name" >
+        {% for item  in field_lst %}
+            <option>{{item}}</option>
+        {% endfor %}
+    </datalist></select>
+    </div>
+
+    <table>
+    <div id="some_add_f">
+
+    </div>
+    </table>
+  {% endfor %}
+{% endif %}
+
+<hr>
+<div>
+{% if save_file_form %}
+    <p>Выберите в каком формате сохранить результат</p>
+          <select type="text" id="file_sufix" name="file_type" list="method" required>
+            <datalist id="file-sufix" >
+                {% for file_format in save_file_form %}
+                    <option>{{file_format}}</option>
+                {% endfor %}
+            </datalist></select>
+{% endif %}
+</div>
+
+<script>
+function updateFields(lst) {
+    var name = "add_dynamic_field";
+    var data = {'table_name':name};
+    for (var prop in lst){
+        data["st_par_"+prop] = lst[prop];
+    }
+    $.ajax({
+            url: '{% url 'get_table_fields' %}',
+            data: data,
+            success: function(data) {
+            $("#some_add_f").html(data);
+            }
+          });
+}
+</script>

@@ -1,0 +1,251 @@
+# основной файл с конфигурацией приложения
+
+# описание раздела DB с таблицами, полями и эксель темплитами если актуально
+DATA_BASE:
+    ---Select_table---:
+      fields:
+        None
+      ref_fields: False
+    Node:
+      fields:
+        uid: "Идентификационный номер узла"
+        frame: "Номер шпангоута"
+        stringer: "Номер стрингера"
+        side: "Сторона LHS или RHS"
+        cs: "id номер системы координат. Создается предварительно"
+        coord_x: "координата x"
+        coord_y: "координата y"
+        coord_z: "координата z"
+     # флаг для описания параметров в таблицах frame vs stringer+Side
+      ref_fields: True
+      # шаблон эксель файла для ввода данных
+      template: node_template.xlsx
+      # виды возможных записей результатов в файл
+      file_type:
+        excel:
+          # Тип записи в эксель файл frame vs stringer+Side
+          fr_str_format
+        bdf:
+    Element:
+      fields:
+        uid: "Идентификационный номер элемента"
+        element_ref: "Ссылка на структурный элемент (например Frame). Создается предварительно"
+        property_id: "Ссылка на id свойства. Создается предварительно"
+      dynamic_fields:
+        type:
+          ---Select_table---:
+            None: None
+          CBEAM:
+            node_1: "Ссылка на id 1-го узла. Создается предварительно"
+            node_2: "Ссылка на id 2-го узла. Создается предварительно"
+            offset_1: "Оффсет 1-го узла. Пример: <1.5 0.1 1.3>"
+            offset_2: "Оффсет 1-го узла. Пример: <1.5 0.1 1.3>"
+          CROD:
+            node_1: "Ссылка на id 1-го узла. Создается предварительно"
+            node_2: "Ссылка на id 2-го узла. Создается предварительно"
+          CQUAD:
+            node_1: "Ссылка на id 1-го узла. Создается предварительно"
+            node_2: "Ссылка на id 2-го узла. Создается предварительно"
+            node_3: "Ссылка на id 3-го узла. Создается предварительно"
+            node_4: "Ссылка на id 4-го узла. Создается предварительно"
+            off_1_x: "Оффсет по нормали элемента."
+          CTRIA:
+            node_1: "Ссылка на id 1-го узла. Создается предварительно"
+            node_2: "Ссылка на id 2-го узла. Создается предварительно"
+            node_3: "Ссылка на id 3-го узла. Создается предварительно"
+            off_1_x: "Оффсет по нормали элемента."
+      ref_fields: False
+      template: element_template.xlsx
+      file_type:
+        excel:
+          fr_str_format
+        bdf:
+    Mass:
+      fields:
+        uid: "Идентификационный номер элемента массы"
+        name: "TBD"
+        weight: "TBD"
+        frame: "Номер шпангоута"
+        stringer: "Номер стрингера"
+        side: "Сторона LHS или RHS"
+      ref_fields: True
+      file_type:
+        excel:
+          fr_str_format
+        bdf:
+          - uid
+          - coord_x
+          - coord_y
+          - coord_z
+    Material:
+      fields:
+        uid: "Идентификационный номер материала"
+        type: "Название карточки в настране. Например MAT1"
+        density: "Плотность"
+        eu: "Модуль упругости"
+        nu: "Коэффициент пуассона"
+      ref_fields: False
+      template: material_template.xlsx
+      file_type:
+        excel:
+          fr_str_format
+        bdf:
+    Section:
+      fields:
+        uid: "Идентификационный номер сечения"
+        geo_type: "Ссылка на структурный элемент (например Frame). Создается предварительно"
+        frame: "Номер шпангоута"
+        stringer: "Номер стрингера"
+        side: "Сторона LHS или RHS"
+      dynamic_fields:
+        type:
+          ---Select_table---:
+            - None
+          Rectangular:
+            height: "высота"
+            width_1: "ширина"
+          I-Section:
+            width_1: "ширина верхней полки"
+            height: "высота"
+            width_2: "ширина нижней полки"
+            th_1: "толщина верхней полки"
+            th_2: "толщина стенки"
+            th_3: "толщина нижней полки"
+          L-Section:
+            width_1: "ширина нижней полки"
+            height: "высота"
+            th_1:  "толщина стенки"
+            th_2: "толщина полки"
+          C-Section:
+            width_1: "ширина верхней полки"
+            height: "высота"
+            width_2: "ширина нижней полки"
+            th_1: "толщина верхней полки"
+            th_2: "толщина стенки"
+            th_3: "толщина нижней полки"
+          Z-Section:
+            width_1: "ширина верхней полки"
+            height: "высота"
+            width_2: "ширина нижней полки"
+            th_1: "толщина верхней полки"
+            th_2: "толщина стенки"
+            th_3: "толщина нижней полки"
+          FEM-Polygon:
+              y: "координата y"
+              z: "координата z"
+      ref_fields: True
+      template: sections_template.xlsx
+      file_type:
+        excel:
+          fr_str_format
+    Section property:
+      fields:
+        uid: "Идентификационный номер свойств сечения"
+        type: "Ссылка на структурный элемент (например Frame). Создается предварительно"
+        area: "Площадь"
+        inertia_zz: "Момент инерции относительно оси z"
+        inertia_yy: "Момент инерции относительно оси y"
+        inertia_zy: "Момент инерции относительно оси zy"
+        inertia_torsion: "Момент инерции на кручение"
+        alpha: "угол поворота нейтральных осей относительно главных"
+        inertia_min: "Момент инерции min"
+        inertia_max: "Момент инерции max"
+      ref_fields: True
+      template: section_properties_template.xlsx
+      file_type:
+        excel:
+          fr_str_format
+    Element property:
+      fields:
+        uid: "Идентификационный номер свойств элемента"
+        material_id: "Ссылка на id материала. Создается предварительно"
+      dynamic_fields:
+        type:
+          ---Select_table---:
+            - None
+          PSHELL:
+            shell_thick: "толщина элемента"
+          PBEAM:
+            section_start: "Ссылка на id свойств сечения в 1-м узле. Создается предварительно"
+            section_end: "Ссылка на id свойств сечения во 2-м узле. Создается предварительно"
+          PROD:
+            section_start: "Ссылка на id свойств сечения. Создается предварительно"
+      ref_fields: False
+      file_type:
+        excel:
+          fr_str_format
+        bdf:
+          - property_start
+          - property_end
+    Section property map:
+      fields:
+        sec_prop_uid: "Ссылка на id свойств сечения. Создается предварительно"
+        frame: "Номер шпангоута"
+        stringer: "Номер стрингера"
+        side: "Сторона LHS или RHS"
+      ref_fields: True
+      file_type:
+        excel:
+          fr_str_format
+    Others:
+      fields:
+        uid: "Идентификационный номер в карточки"
+        type: "Тип карточки"
+        card_str: "текстовое поле карточки"
+        comment: "комментарии"
+      ref_fields: False
+      file_type:
+        excel:
+          easy_format
+        bdf:
+    Stringer:
+      fields:
+        number: "Номер стрингера"
+        side: "Сторона LHS, RHS"
+      ref_fields: False
+    Frame:
+      fields:
+        number: "Номер шпангоута"
+      ref_fields: False
+# основное меню с соответсвующими url путями
+WORK_TYPE:
+    data_base:
+      - name: Внести данные
+        url_added: gfem/post_data
+      - name: Получить данные
+        url_added: gfem/get_data
+      - name: Внести изменения
+        url_added: gfem/update_data
+      - name: Удалить данные
+        url_added: gfem/delete_data
+    services:
+      - name: Расчет поперечных сечений
+        url_added: stress-service/service_CS
+      - name: Создать карту id
+        url_added: stress-service/id-generate
+    standards:
+      - name: Материалы
+        url_added: "#"
+      - name: Крепеж
+        url_added: "#"
+      - name: Параметры усталости
+        url_added: "#"
+# Типы расчетов (было перемещено в основные таблицы). Требует переработки!!!!
+CALCULATION_TYPE:
+  CROSS-SECTION:
+    STANDARD-PART:
+      Parameters:
+        div_y: "Смещение сечения по оси у"
+        div_z: "Смещение сечения по оси z"
+        alpha: "Угол поворота сечения по часовой стрелки"
+# Словарь с именами на страницы и соотетсвующими классами в программе или сервере.
+VOCABULARY:
+  Rectangular: Square
+  I-Section: ISection
+  L-Section: AngleSection
+  C-Section: CSection
+  Z-Section: ZSection
+  FEM-Polygon: FemPolygon
+  Section property: SectionProperty
+  Element property: ElProperty
+  Section property map: SectionPropertyMap

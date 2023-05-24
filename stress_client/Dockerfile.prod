@@ -1,0 +1,61 @@
+###########
+# BUILDER #
+###########
+
+FROM python:3.9-alpine as builder
+
+WORKDIR /usr/src/s_client
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# установка зависимостей
+RUN apk update \
+    && apk add postgresql-dev gcc python3-dev musl-dev jpeg-dev zlib-dev libjpeg build-base openblas-dev gfortran gdal-dev geos-dev geos
+RUN pip install --upgrade pip
+
+# установка зависимостей
+COPY ./requirements.txt .
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/s_client/wheels -r requirements.txt
+
+
+#########
+# FINAL #
+#########
+
+FROM python:3.9-alpine
+
+# создаем директорию для пользователя
+RUN mkdir -p /home/s_client
+
+# создаем отдельного пользователя
+RUN addgroup -S stress_admin && adduser -S stress_admin -G stress_admin
+
+# создание каталога для приложения
+ENV HOME=/home/s_client
+ENV SCL_HOME=/home/s_client/web
+RUN mkdir $SCL_HOME
+RUN mkdir $SCL_HOME/static
+RUN mkdir $SCL_HOME/media
+WORKDIR $SCL_HOME
+
+# установка зависимостей и копирование из builder
+RUN apk update && apk add libpq libjpeg openblas-dev g++ geos-dev
+COPY --from=builder /usr/src/s_client/wheels /wheels
+COPY --from=builder /usr/src/s_client/requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install --no-cache /wheels/*
+
+# копирование entrypoint-prod.sh
+COPY ./entrypoint.sh $SCL_HOME
+
+# копирование проекта Django
+COPY . $SCL_HOME
+
+# изменение прав для пользователя app
+RUN chown -R stress_admin:stress_admin $SCL_HOME
+
+# изменение рабочего пользователя
+USER stress_admin
+
+ENTRYPOINT ["/home/s_client/web/entrypoint.sh"]

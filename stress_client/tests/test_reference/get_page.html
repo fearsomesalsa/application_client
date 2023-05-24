@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href=/static/css/bootstrap.min.css rel="stylesheet">
+<script src=/static/js/bootstrap.bundle.min.js> </script>
+<head>
+	<meta charset="UTF-8">
+     <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon"/>
+    <title>Progresstech GFEM Loads</title>
+    <nav class="navbar" aria-label="Light offcanvas navbar" style="background-color:#3a7fe5;">
+      <div class="container-fluid">
+      <a class="navbar-brand" href="/"><img src= /static/img/logo.png width=140px height=50px/></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarLight"
+              data-bs-target="#navbarLight"  aria-controls="offcanvasNavbarLight">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbarLight" aria-labelledby="offcanvasNavbarLightLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">Progresstech</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="d-flex flex-column flex-shrink-0 p-2 mb-auto">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Главная</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Работа с Базой Данных
+              </a>
+            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuLight">
+
+                <li><a class="dropdown-item" href="/gfem/post_data">Внести данные</a></li>
+
+                <li><a class="dropdown-item" href="/gfem/get_data">Получить данные</a></li>
+
+                <li><a class="dropdown-item" href="/gfem/update_data">Внести изменения</a></li>
+
+                <li><a class="dropdown-item" href="/gfem/delete_data">Удалить данные</a></li>
+
+            </ul>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Cервисы
+              </a>
+            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuLight">
+
+                <li><a class="dropdown-item" href="/stress-service/service_CS">Расчет поперечных сечений</a></li>
+
+                <li><a class="dropdown-item" href="/stress-service/id-generate">Создать карту id</a></li>
+
+            </ul>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Стандарты
+              </a>
+            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuLight">
+
+                <li><a class="dropdown-item" href="/#">Материалы</a></li>
+
+                <li><a class="dropdown-item" href="/#">Крепеж</a></li>
+
+                <li><a class="dropdown-item" href="/#">Параметры усталости</a></li>
+
+            </ul>
+            <li class="nav-item"><a class="nav-link active"  href="/aboutus">Помощь</a></li>
+            <li class="nav-item"><a class="nav-link active"  href="/contacts">Контакты</a></li>
+          </ul>
+                <hr>
+            </div></div>
+        </div>
+      </div>
+    </nav>
+</head>
+
+<div style="margin-bottom:125px">
+
+<script src=/static/js/jquery.min.js>
+</script>
+<script src=/static/js/gfem_java.js> </script>
+  <body>
+	<div id="input-form" class="m-3">
+    <form method="post" id="parameters-form">
+          <p>Выберите таблицу для которых нужно получить данные</p>
+          <select type="text" class="update_param_list" id="table_name" name="table_name" list="method" required>
+            <datalist id="table-name" >
+
+                    <option>---Select_table---</option>
+
+                    <option>Node</option>
+
+                    <option>Element</option>
+
+                    <option>Mass</option>
+
+                    <option>Material</option>
+
+                    <option>Section</option>
+
+                    <option>Section property</option>
+
+                    <option>Element property</option>
+
+                    <option>Section property map</option>
+
+                    <option>Others</option>
+
+                    <option>Stringer</option>
+
+                    <option>Frame</option>
+
+            </datalist></select>
+            <div class="mt-3">
+            <input class="update_param_list" type="checkbox" name="save_in_file" id="save_file_checkbox" checked>
+            <label for="save_file_checkbox"> Сохранить результаты запроса в файл? </label>
+            </div>
+         <hr>
+        <div id="added-fields">
+
+
+
+
+<table>
+
+</table>
+
+
+
+<hr>
+<div>
+
+</div>
+
+<script>
+function updateFields(lst) {
+    var name = "add_dynamic_field";
+    var data = {'table_name':name};
+    for (var prop in lst){
+        data["st_par_"+prop] = lst[prop];
+    }
+    $.ajax({
+            url: '/ajax/get_table_fields/',
+            data: data,
+            success: function(data) {
+            $("#some_add_f").html(data);
+            }
+          });
+}
+</script>
+</div>
+<hr>
+<div class="d-grid gap-8 ">
+	<input type="hidden" name="_method" value="get">
+	<button id="sender" type="button" class="btn btn-primary btn-block ms-5 me-5 mb-4" onclick=senderFunction("/ajax/get_response/")> Получить </button>
+<!--                      > Получить </button>-->
+
+</div>
+</form>
+</div>
+
+    <div class="card opacity-100 border-white">
+	<div class="card-header">
+		<h3 class="text-center">Результаты Запроса</h3>
+	</div>
+	<div class="container" style="width:500;height:500" id="load-to-file">
+	</div>
+	<div class="table-responsive">
+		<h6 class="text-center"><u>Результат запроса</u></h6><br>
+		<table class="table table-light table-striped" id="forces-table">
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+<script>
+	$(document).ready(updateParamList(".update_param_list", "#table_name", "#save_file_checkbox", "#added-fields", "/ajax/get_table_fields/"));
+</script>
+</body>
+
+</div>
+
+</html>

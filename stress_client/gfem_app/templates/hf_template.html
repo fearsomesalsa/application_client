@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% load static %}
+    <link href={%static "css/bootstrap.min.css" %} rel="stylesheet">
+    <link href={%static "css/loader-styles.css" %} rel="stylesheet">
+    <script src={%static "js/bootstrap.bundle.min.js" %}></script>
+<head>
+    <meta charset="UTF-8">
+     <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon"/>
+    <title>Progresstech GFEM Loads</title>
+    <nav class="navbar" aria-label="Light offcanvas navbar" style="background-color:#3a7fe5;">
+      <div class="container-fluid">
+      <a class="navbar-brand" href="/"><img src= {% static "/img/logo.png" %} width=140px height=50px/></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarLight"
+              data-bs-target="#navbarLight"  aria-controls="offcanvasNavbarLight">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbarLight" aria-labelledby="offcanvasNavbarLightLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">Progresstech</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="d-flex flex-column flex-shrink-0 p-2 mb-auto">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Главная</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Работа с Базой Данных
+              </a>
+            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuLight">
+                {% for data in catalogs.data_base %}
+                <li><a class="dropdown-item" href="/{{ data.url_added }}">{{ data.name }}</a></li>
+                {% endfor %}
+            </ul>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Cервисы
+              </a>
+            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuLight">
+                {% for data in catalogs.services %}
+                <li><a class="dropdown-item" href="/{{ data.url_added }}">{{ data.name }}</a></li>
+                {% endfor %}
+            </ul>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Стандарты
+              </a>
+            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuLight">
+                {% for data in catalogs.standards %}
+                <li><a class="dropdown-item" href="/{{ data.url_added }}">{{ data.name }}</a></li>
+                {% endfor %}
+            </ul>
+            <li class="nav-item"><a class="nav-link active"  href="/aboutus">Помощь</a></li>
+            <li class="nav-item"><a class="nav-link active"  href="/contacts">Контакты</a></li>
+          </ul>
+                <hr>
+            </div></div>
+        </div>
+      </div>
+    </nav>
+</head>
+
+<div style="margin-bottom:125px">
+{% block content %}
+{% endblock %}
+</div>
+
+<div class="loader-wrapper">
+    <span class="loader"></span>
+</div>
+
+</html>

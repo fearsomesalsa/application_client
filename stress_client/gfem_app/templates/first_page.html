@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "hf_template.html" %}
+{% block content %}
+{% load static %}
+<body style='background: url({% static "img/airplane.png" %}); background-size: 100%;'>
+<div class="justify-content-center m-3">
+<div class="row row-cols-1 row-cols-sm-2">
+   <div class="col-lg-2 cols-sm-1 mb-4">
+      <div class="list-group" id="list-tab" role="tablist">
+        <a class="list-group-item list-group-item-action active" id="list-description-list" data-bs-toggle="list" href="#list-description" role="tab" aria-controls="home">Описание</a>
+        <a class="list-group-item list-group-item-action" id="list-node-list" data-bs-toggle="list" href="#list-node" role="tab" aria-controls="node">Узловые точки</a>
+        <a class="list-group-item list-group-item-action" id="list-sections-list" data-bs-toggle="list" href="#list-sections" role="tab" aria-controls="sections">Задание сечений</a>
+        <a class="list-group-item list-group-item-action" id="list-skin-list" data-bs-toggle="list" href="#list-skin" role="tab" aria-controls="skin">Задание толщин общивки</a>
+      </div>
+   </div>
+   <div class="col-lg-10 cols-sm-1">
+      <div class="tab-content" id="list-nav-tabContent">
+        <div class="tab-pane fade show active" id="list-description" role="tabpanel" aria-labelledby="list-description-list">
+            <div class="card opacity-100 border-white"> <p class="m-1"> Данная программа служит для автоматизации занесения результатов образмеривания и создания КЭМ
+                на основе этих данных. И дальнейшей работы с полученными результатами расчета.</p></div>
+        </div>
+        <div class="tab-pane fade" id="list-node" role="tabpanel" aria-labelledby="list-node-list">
+            {% include 'gfem_rules/node_create_rule.html' %}
+        </div>
+        <div class="tab-pane fade" id="list-sections" role="tabpanel" aria-labelledby="list-sections-list">
+            <div class="card opacity-100 border-white"><p class="m-1">
+            Затем можно приступить к заданию поперечного сечения элементов. Помимо размеров для каждого сечения необходимо
+    указать тип структуры Frame, Stringer, Rib и т.д, так же требуется указать расположение сечения (номер шпангоута,
+                сторона и номер стрингера)</p></div></div>
+        <div class="tab-pane fade" id="list-skin" role="tabpanel" aria-labelledby="list-skin-list">
+            <div class="card opacity-100 border-white"><p class="m-1"> Задание толщин обшивки происходит в меню.......</p></div>
+        </div>
+      </div>
+   </div>
+</div>
+</body>
+{% endblock %}
+</html>

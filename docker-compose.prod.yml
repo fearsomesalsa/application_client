@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  web:
+    # Берем Dockerfile из каталога app
+    build:
+       context: ./stress_client
+       dockerfile: Dockerfile.prod
+    # Запускаем сервер gunicorn
+    command: gunicorn stress_client.wsgi:application --bind 0.0.0.0:8000
+    #command: python manage.py runserver 0.0.0.0:8000
+    # Открываем порт 8000 наружy
+    expose:
+      - 8000
+    # Подключаем статические и медиа файлы
+    volumes:
+      - static_volume:/home/s_client/web/static
+      - media_volume:/home/s_client/web/media      
+    # Файл содержащий переменные для контейнера
+    env_file:
+      - ./.env.prod
+    depends_on:
+      - db
+  db:
+    # Образ и версия базы, которую мы будем использовать
+    image: postgres:12.0-alpine
+    # Внешний том(volume) и место где он будет подключен внутри контейнера
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.prod.db
+      
+  nginx:
+    build: ./nginx
+    # Подключаем статические и медиа файлы
+    volumes:
+      - static_volume:/home/s_client/web/static
+      - media_volume:/home/s_client/web/media   
+    ports:
+      - 80:80
+    depends_on:
+      - web    
+      
+volumes:
+  postgres_volume:
+  static_volume:
+  media_volume:
